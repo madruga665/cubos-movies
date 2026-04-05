@@ -3,19 +3,18 @@ import { Input } from '@/components/ui/input/input';
 import { Button } from '@/components/ui/button/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { loginAction } from '../../../actions';
+import { LoginFormValues, loginSchema } from './login-schema';
+import { toast } from 'sonner';
 import Link from 'next/link';
-import { loginAction } from '../../actions';
-import { useState } from 'react';
-import { LoginFormValues, loginSchema } from '../../schemas/loginSchema';
 
 export function LoginForm() {
-  const [serverError, setServerError] = useState<string | null>(null);
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
+    shouldFocusError: false,
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -24,8 +23,11 @@ export function LoginForm() {
   });
 
   async function onSubmit(loginData: LoginFormValues) {
-    setServerError(null);
     const result = await loginAction(loginData);
+
+    if (result?.message) {
+      toast.error(result.message);
+    }
   }
 
   return (
@@ -47,8 +49,6 @@ export function LoginForm() {
         {...register('password')}
         error={errors.password?.message}
       />
-
-      {serverError && <span className="text-red-500 text-sm font-roboto">{serverError}</span>}
 
       <div className="flex items-center justify-between w-full mt-2">
         <Link

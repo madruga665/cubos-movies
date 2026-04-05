@@ -23,6 +23,10 @@ const mockSession = {
   },
 };
 
+jest.mock('@/app/(auth)/actions', () => ({
+  logoutAction: jest.fn(),
+}));
+
 jest.mock('@/lib/auth', () => ({
   auth: {
     api: {
