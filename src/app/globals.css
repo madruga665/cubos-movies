@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  /* Common variables */
+  --primary: #8e4ec6;
+}
+
+/* Dark Theme (Default) */
+:root {
+  --background: #121113;
+  --foreground: #eeeef0;
+  --card: #232225;
+  --input: #1a191b;
+  --border: rgba(241, 230, 253, 0.19);
+  --text-secondary: #6f6d78;
+  --text-footer: #b5b2bc;
+  --text-brand: #ffffff;
+}
+
+/* Light Theme */
+.light {
+  --background: #fdfcfd;
+  --foreground: #1c2024;
+  --card: #f2eff3;
+  --input: #faf9fb;
+  --border: #dbd8e0;
+  --text-secondary: #8e8c99;
+  --text-footer: #84828e;
+  --text-brand: #1c2024;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-input-bg: var(--input);
+  --color-border-custom: var(--border);
+  --color-secondary-text: var(--text-secondary);
+  --color-footer-text: var(--text-footer);
+  --color-brand-text: var(--text-brand);
+  --font-inter: var(--font-inter);
+  --font-roboto: var(--font-roboto);
+  --font-montserrat: var(--font-montserrat);
+  --spacing-141: 35.25rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
