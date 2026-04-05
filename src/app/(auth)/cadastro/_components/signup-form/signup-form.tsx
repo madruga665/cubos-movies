@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SignupFormValues, signupSchema } from './signup-schema';
 import { signupAction } from '@/app/(auth)/actions';
+import { toast } from 'sonner';
 
 export function SignupForm() {
   const {
@@ -22,7 +23,11 @@ export function SignupForm() {
   });
 
   async function onSubmit(signupData: SignupFormValues) {
-    await signupAction(signupData);
+    const result = await signupAction(signupData);
+
+    if (result?.message) {
+      toast.error(result.message);
+    }
   }
 
   return (

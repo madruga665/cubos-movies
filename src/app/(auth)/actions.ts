@@ -16,16 +16,15 @@ export async function loginAction(formData: LoginFormValues): Promise<void | { m
         password,
       },
     });
-
-    redirect('/dashboard');
   } catch (error) {
     if (error instanceof APIError && error.body?.code === 'INVALID_EMAIL_OR_PASSWORD') {
       return {
         message: 'E-mail ou senha incorretos',
       };
     }
-    redirect('/login');
   }
+
+  redirect('/dashboard');
 }
 
 export async function logoutAction() {
@@ -36,16 +35,25 @@ export async function logoutAction() {
   redirect('/');
 }
 
-export async function signupAction(formData: SignupFormValues) {
-  const { name, email, password } = formData;
+export async function signupAction(
+  formData: SignupFormValues,
+): Promise<void | { message: string }> {
+  try {
+    const { name, email, password } = formData;
 
-  await auth.api.signUpEmail({
-    body: {
-      name,
-      email,
-      password,
-    },
-  });
-
+    await auth.api.signUpEmail({
+      body: {
+        name,
+        email,
+        password,
+      },
+    });
+  } catch (error) {
+    if (error instanceof APIError && error.body?.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL') {
+      return {
+        message: 'Email já cadastrado',
+      };
+    }
+  }
   redirect('/dashboard');
 }
