@@ -6,7 +6,7 @@ import './globals.css';
 import Image from 'next/image';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { Toaster } from 'sonner';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -35,8 +35,6 @@ export default async function RootLayout({
     headers: await headers(),
   });
 
-  console.log(session);
-
   return (
     <html
       lang="pt-BR"
@@ -61,6 +59,7 @@ export default async function RootLayout({
         <Providers>
           <Topbar session={session} />
           <main className="relative z-30 flex-1 flex flex-col items-center justify-center">
+            <Toaster richColors />
             {children}
           </main>
           <Footer />

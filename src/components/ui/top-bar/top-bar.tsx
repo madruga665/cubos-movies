@@ -3,7 +3,7 @@ import { Logo } from '@/components/ui/logo/logo';
 import { Button } from '@/components/ui/button/button';
 import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
-import { logoutAction } from '@/app/login/actions';
+import { logoutAction } from '@/app/(auth)/actions';
 import { auth } from '@/lib/auth';
 
 type Session = typeof auth.$Infer.Session;
