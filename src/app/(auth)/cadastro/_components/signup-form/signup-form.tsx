@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SignupFormValues, signupSchema } from './signup-schema';
 import { signupAction } from '@/app/(auth)/actions';
 import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
 
 export function SignupForm() {
   const {
@@ -23,10 +24,12 @@ export function SignupForm() {
   });
 
   async function onSubmit(signupData: SignupFormValues) {
-    const result = await signupAction(signupData);
+    const { success, error } = await signupAction(signupData);
 
-    if (result?.message) {
-      toast.error(result.message);
+    if (success) {
+      redirect('/dashboard');
+    } else {
+      return toast.error(error);
     }
   }
 

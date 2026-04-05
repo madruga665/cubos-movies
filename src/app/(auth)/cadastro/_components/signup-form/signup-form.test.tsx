@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SignupForm } from './signup-form';
 import { signupAction } from '@/app/(auth)/actions';
 import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
 
 jest.mock('@/app/(auth)/actions', () => ({
   signupAction: jest.fn(),
@@ -11,6 +12,10 @@ jest.mock('sonner', () => ({
   toast: {
     error: jest.fn(),
   },
+}));
+
+jest.mock('next/navigation', () => ({
+  redirect: jest.fn(),
 }));
 
 describe('SignupForm', () => {
@@ -43,8 +48,8 @@ describe('SignupForm', () => {
     expect(await screen.findByText(/as senhas devem ser iguais/i)).toBeInTheDocument();
   });
 
-  it('should call signupAction with correct data', async () => {
-    (signupAction as jest.Mock).mockResolvedValue(undefined);
+  it('should call signupAction and redirect on success', async () => {
+    (signupAction as jest.Mock).mockResolvedValue({ success: true, error: null });
     render(<SignupForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
@@ -60,11 +65,12 @@ describe('SignupForm', () => {
         password: 'password123',
         confirmPassword: 'password123',
       });
+      expect(redirect).toHaveBeenCalledWith('/dashboard');
     });
   });
 
   it('should show error toast if signupAction returns an error', async () => {
-    (signupAction as jest.Mock).mockResolvedValue({ message: 'Email já cadastrado' });
+    (signupAction as jest.Mock).mockResolvedValue({ success: false, error: 'Email já cadastrado' });
     render(<SignupForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });

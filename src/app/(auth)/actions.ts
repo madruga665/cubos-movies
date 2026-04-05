@@ -7,7 +7,23 @@ import { headers } from 'next/headers';
 import { SignupFormValues } from './cadastro/_components/signup-form/signup-schema';
 import { APIError } from 'better-auth';
 
-export async function loginAction(formData: LoginFormValues): Promise<void | { message: string }> {
+type ActionResult = {
+  success: boolean;
+  error: string | null;
+};
+
+const errorMessages = {
+  generic: 'Um erro ocorreu, tente novamente mais tarde',
+  invalidEmailOrPassword: 'E-mail ou senha incorretos',
+  emailAlreadyInUse: 'Email já cadastrado',
+};
+
+const betterAuthErrorCodes = {
+  invalidEmailOrPassword: 'INVALID_EMAIL_OR_PASSWORD',
+  userAlreadyExists: 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL',
+};
+
+export async function loginAction(formData: LoginFormValues): Promise<ActionResult> {
   try {
     const { email, password } = formData;
     await auth.api.signInEmail({
@@ -16,15 +32,24 @@ export async function loginAction(formData: LoginFormValues): Promise<void | { m
         password,
       },
     });
+
+    return { success: true, error: null };
   } catch (error) {
-    if (error instanceof APIError && error.body?.code === 'INVALID_EMAIL_OR_PASSWORD') {
+    if (
+      error instanceof APIError &&
+      error.body?.code === betterAuthErrorCodes.invalidEmailOrPassword
+    ) {
       return {
-        message: 'E-mail ou senha incorretos',
+        success: false,
+        error: errorMessages.invalidEmailOrPassword,
       };
     }
-  }
 
-  redirect('/dashboard');
+    return {
+      success: false,
+      error: errorMessages.generic,
+    };
+  }
 }
 
 export async function logoutAction() {
@@ -35,9 +60,7 @@ export async function logoutAction() {
   redirect('/');
 }
 
-export async function signupAction(
-  formData: SignupFormValues,
-): Promise<void | { message: string }> {
+export async function signupAction(formData: SignupFormValues): Promise<ActionResult> {
   try {
     const { name, email, password } = formData;
 
@@ -48,12 +71,19 @@ export async function signupAction(
         password,
       },
     });
+
+    return { success: true, error: null };
   } catch (error) {
-    if (error instanceof APIError && error.body?.code === 'USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL') {
+    if (error instanceof APIError && error.body?.code === betterAuthErrorCodes.userAlreadyExists) {
       return {
-        message: 'Email já cadastrado',
+        success: false,
+        error: errorMessages.emailAlreadyInUse,
       };
     }
+
+    return {
+      success: false,
+      error: errorMessages.generic,
+    };
   }
-  redirect('/dashboard');
 }

@@ -7,6 +7,7 @@ import { loginAction } from '../../../actions';
 import { LoginFormValues, loginSchema } from './login-schema';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export function LoginForm() {
   const {
@@ -23,10 +24,12 @@ export function LoginForm() {
   });
 
   async function onSubmit(loginData: LoginFormValues) {
-    const result = await loginAction(loginData);
+    const { success, error } = await loginAction(loginData);
 
-    if (result?.message) {
-      toast.error(result.message);
+    if (success) {
+      redirect('/dashboard');
+    } else {
+      return toast.error(error);
     }
   }
 
