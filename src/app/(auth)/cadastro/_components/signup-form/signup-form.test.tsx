@@ -1,9 +1,16 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SignupForm } from './signup-form';
 import { signupAction } from '@/app/(auth)/actions';
+import { toast } from 'sonner';
 
 jest.mock('@/app/(auth)/actions', () => ({
   signupAction: jest.fn(),
+}));
+
+jest.mock('sonner', () => ({
+  toast: {
+    error: jest.fn(),
+  },
 }));
 
 describe('SignupForm', () => {
@@ -53,6 +60,21 @@ describe('SignupForm', () => {
         password: 'password123',
         confirmPassword: 'password123',
       });
+    });
+  });
+
+  it('should show error toast if signupAction returns an error', async () => {
+    (signupAction as jest.Mock).mockResolvedValue({ message: 'Email já cadastrado' });
+    render(<SignupForm />);
+
+    fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'john@example.com' } });
+    fireEvent.change(screen.getByLabelText(/^senha/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Email já cadastrado');
     });
   });
 });
