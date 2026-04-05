@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const singupSchema = z
+export const signupSchema = z
   .object({
     name: z.string().min(1, { message: 'Nome é obrigatório' }),
     email: z.email('Formato de e-mail inválido'),
@@ -12,4 +12,4 @@ export const singupSchema = z
     path: ['confirmPassword'],
   });
 
-export type SingupFormValues = z.infer<typeof singupSchema>;
+export type SignupFormValues = z.infer<typeof signupSchema>;

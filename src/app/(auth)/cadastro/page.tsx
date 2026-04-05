@@ -1,9 +1,9 @@
-import { SingupForm } from './_components/singup-form/singup-form';
+import { SignupForm } from './_components/signup-form/signup-form';
 
-export default function SingupPage() {
+export default function SignupPage() {
   return (
     <div className="flex flex-col p-4 w-full justify-center items-center gap-6">
-      <SingupForm />
+      <SignupForm />
     </div>
   );
 }

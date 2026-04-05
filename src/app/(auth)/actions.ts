@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { LoginFormValues } from './login/_components/login-form/login-schema';
 import { headers } from 'next/headers';
-import { SingupFormValues } from './cadastro/_components/singup-form/singup-schema';
+import { SignupFormValues } from './cadastro/_components/signup-form/signup-schema';
 import { APIError } from 'better-auth';
 
 export async function loginAction(formData: LoginFormValues): Promise<void | { message: string }> {
@@ -36,7 +36,7 @@ export async function logoutAction() {
   redirect('/');
 }
 
-export async function singupAction(formData: SingupFormValues) {
+export async function signupAction(formData: SignupFormValues) {
   const { name, email, password } = formData;
 
   await auth.api.signUpEmail({

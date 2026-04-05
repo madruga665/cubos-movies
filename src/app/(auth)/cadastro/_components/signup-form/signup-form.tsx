@@ -3,16 +3,16 @@ import { Input } from '@/components/ui/input/input';
 import { Button } from '@/components/ui/button/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SingupFormValues, singupSchema } from './singup-schema';
-import { singupAction } from '@/app/(auth)/actions';
+import { SignupFormValues, signupSchema } from './signup-schema';
+import { signupAction } from '@/app/(auth)/actions';
 
-export function SingupForm() {
+export function SignupForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SingupFormValues>({
-    resolver: zodResolver(singupSchema),
+  } = useForm<SignupFormValues>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -21,8 +21,8 @@ export function SingupForm() {
     },
   });
 
-  async function onSubmit(singupData: SingupFormValues) {
-    await singupAction(singupData);
+  async function onSubmit(signupData: SignupFormValues) {
+    await signupAction(signupData);
   }
 
   return (

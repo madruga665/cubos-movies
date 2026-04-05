@@ -1,14 +1,14 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { SingupForm } from './singup-form';
-import { singupAction } from '@/app/(auth)/actions';
+import { SignupForm } from './signup-form';
+import { signupAction } from '@/app/(auth)/actions';
 
 jest.mock('@/app/(auth)/actions', () => ({
-  singupAction: jest.fn(),
+  signupAction: jest.fn(),
 }));
 
-describe('SingupForm', () => {
-  it('should render the singup form', () => {
-    render(<SingupForm />);
+describe('SignupForm', () => {
+  it('should render the signup form', () => {
+    render(<SignupForm />);
     expect(screen.getByLabelText(/nome/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^senha/i)).toBeInTheDocument(); // Exact match to avoid confirmPassword
@@ -17,7 +17,7 @@ describe('SingupForm', () => {
   });
 
   it('should show validation errors', async () => {
-    render(<SingupForm />);
+    render(<SignupForm />);
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     expect(await screen.findByText(/nome é obrigatório/i)).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('SingupForm', () => {
   });
 
   it('should show error if passwords do not match', async () => {
-    render(<SingupForm />);
+    render(<SignupForm />);
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'Test' } });
     fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
     fireEvent.change(screen.getByLabelText(/^senha/i), { target: { value: 'password123' } });
@@ -36,9 +36,9 @@ describe('SingupForm', () => {
     expect(await screen.findByText(/as senhas devem ser iguais/i)).toBeInTheDocument();
   });
 
-  it('should call singupAction with correct data', async () => {
-    (singupAction as jest.Mock).mockResolvedValue(undefined);
-    render(<SingupForm />);
+  it('should call signupAction with correct data', async () => {
+    (signupAction as jest.Mock).mockResolvedValue(undefined);
+    render(<SignupForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'john@example.com' } });
@@ -47,7 +47,7 @@ describe('SingupForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     await waitFor(() => {
-      expect(singupAction).toHaveBeenCalledWith({
+      expect(signupAction).toHaveBeenCalledWith({
         name: 'John Doe',
         email: 'john@example.com',
         password: 'password123',
