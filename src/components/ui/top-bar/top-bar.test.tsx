@@ -1,43 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import { Topbar } from './top-bar';
+import { usePathname } from 'next/navigation';
 
-const mockSession = {
-  session: {
-    expiresAt: new Date('2026-04-12T00:08:12.464Z'),
-    token: 'lh9OPZoBPdvsj1G8F7w1xUYMdE18eRUg',
-    createdAt: new Date('2026-04-05T00:08:12.464Z'),
-    updatedAt: new Date('2026-04-05T00:08:12.464Z'),
-    ipAddress: '',
-    userAgent: '',
-    userId: 'nfH2ZumlYHe6QEzTwNPZvmotyMRx0swF',
-    id: 'pJRFgic98DRKHQIsu3Ll76xMdhHwvksC',
-  },
-  user: {
-    name: 'john doe',
-    email: 'user@example.com',
-    emailVerified: false,
-    image: null,
-    createdAt: new Date('2026-04-03T21:19:37.113Z'),
-    updatedAt: new Date('2026-04-03T21:19:37.113Z'),
-    id: 'nfH2ZumlYHe6QEzTwNPZvmotyMRx0swF',
-  },
-};
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
 
 jest.mock('@/app/(auth)/actions', () => ({
   logoutAction: jest.fn(),
 }));
 
-jest.mock('@/lib/auth', () => ({
-  auth: {
-    api: {
-      getSession: jest.fn().mockResolvedValue({ session: () => mockSession }),
-    },
-  },
-}));
-
 describe('Topbar component', () => {
   function renderTopbar() {
-    return render(<Topbar session={mockSession} />);
+    return render(<Topbar />);
   }
 
   it('renders Logo components', () => {
@@ -47,6 +22,7 @@ describe('Topbar component', () => {
   });
 
   it('renders Logout button', () => {
+    (usePathname as jest.Mock).mockReturnValue('/dashboard');
     renderTopbar();
 
     expect(screen.getByText('Logout')).toBeInTheDocument();

@@ -4,13 +4,7 @@ import { Button } from '@/components/ui/button/button';
 import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
 import { logoutAction } from '@/app/(auth)/actions';
-import { auth } from '@/lib/auth';
-
-type Session = typeof auth.$Infer.Session;
-
-type TopbarProps = {
-  session: Session | null;
-};
+import { usePathname } from 'next/navigation';
 
 function useHasMounted() {
   return useSyncExternalStore(
@@ -20,9 +14,11 @@ function useHasMounted() {
   );
 }
 
-export function Topbar({ session }: TopbarProps) {
+export function Topbar() {
   const mounted = useHasMounted();
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const isDashboard = pathname === '/dashboard';
 
   if (!mounted) return null;
 
@@ -77,7 +73,7 @@ export function Topbar({ session }: TopbarProps) {
             )}
           </div>
         </Button>
-        {session && <Button onClick={onLogout}>Logout</Button>}
+        {isDashboard && <Button onClick={onLogout}>Logout</Button>}
       </div>
     </header>
   );

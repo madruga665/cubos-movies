@@ -19,18 +19,5 @@ export default async function LoginPage() {
     redirect('/dashboard');
   }
 
-  return (
-    <div className="flex flex-col p-4 w-full justify-center items-center gap-6">
-      <LoginForm />
-      <div className="flex gap-2 items-center justify-center">
-        <p>Ainda não é cadastrado?</p>
-        <Link
-          href="/cadastro"
-          className="font-roboto font-normal text-primary text-base underline decoration-solid decoration-primary underline-offset-4"
-        >
-          Crie sua conta aqui
-        </Link>
-      </div>
-    </div>
-  );
+  return <LoginForm />;
 }
