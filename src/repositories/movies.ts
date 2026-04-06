@@ -23,13 +23,16 @@ export async function getMovieListRepository(page?: number, title?: string) {
     const queryString = params.toString();
     const urlWithParams = `/api/v1/movies${queryString ? `?${queryString}` : ''}`;
 
-    const response = await fetchAdapter<MovieResponse>({
+    return await fetchAdapter<MovieResponse>({
       url: urlWithParams,
       options: requestOptions,
     });
-
-    return response;
   } catch (error) {
-    console.error(error);
+    console.error(`[getMovieListRepository] - Erro inesperado:`, error);
+    return {
+      data: null,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+    };
   }
 }
