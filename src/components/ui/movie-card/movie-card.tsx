@@ -32,7 +32,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ title, genres, voteAvarege
         <h3 className="font-montserrat font-bold md:font-semibold text-[14px] md:text-[16px] text-white uppercase leading-snug w-full line-clamp-2">
           {title}
         </h3>
-        <p className="font-montserrat font-normal text-[12.8px] text-[#b4b4b4] w-full truncate">
+        <p className="font-montserrat font-normal text-[12.8px] text-[#b4b4b4] w-full truncate opacity-0 group-hover:opacity-100">
           {genres}
         </p>
       </div>

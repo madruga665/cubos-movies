@@ -3,7 +3,6 @@ type RatingIndicatorProps = {
 };
 
 export function RatingIndicator({ rating }: RatingIndicatorProps) {
-  // Use a fixed coordinate system with viewBox for consistent calculations
   const radius = 44;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (rating / 100) * circumference;
@@ -12,10 +11,7 @@ export function RatingIndicator({ rating }: RatingIndicatorProps) {
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
       <div className="relative flex items-center justify-center w-[98px] h-[98px] md:w-[140px] md:h-[140px]">
         {/* Background Circle and Progress */}
-        <svg
-          viewBox="0 0 100 100"
-          className="absolute inset-0 w-full h-full transform -rotate-90"
-        >
+        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full transform -rotate-90">
           {/* Background Circle */}
           <circle
             cx="50"
