@@ -1,20 +1,38 @@
+'use client';
+
 import React from 'react';
 import { Button } from '@/components/ui/button/button';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   currentPage?: number;
   totalPages?: number;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
-  const pages = Array.from({ length: totalPages || 0 }, (_, index) => index + 1);
+export const Pagination: React.FC<PaginationProps> = ({
+  currentPage = 1,
+  totalPages = 1,
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
+
+    router.push(`?${params.toString()}`);
+  };
+
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
     <div className="flex gap-3 items-center justify-center p-4 md:p-6 w-full">
       <Button
         variant="ghost"
         disabled={currentPage === 1}
-        // onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => handlePageChange(currentPage - 1)}
         className="px-3 py-3 min-w-[44px]"
         aria-label="Página anterior"
       >
@@ -39,8 +57,12 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages 
         <Button
           key={page}
           variant={currentPage === page ? 'primary' : 'ghost'}
-          // onClick={() => onPageChange(page)}
-          className={`min-w-[44px] ${currentPage !== page ? 'text-foreground opacity-60 hover:opacity-100 font-bold' : 'font-bold'}`}
+          onClick={() => handlePageChange(page)}
+          className={`min-w-[44px] ${
+            currentPage !== page
+              ? 'text-foreground opacity-60 hover:opacity-100 font-bold'
+              : 'font-bold'
+          }`}
         >
           {page}
         </Button>
@@ -49,7 +71,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages 
       <Button
         variant="primary" // Active state for next arrow as per design
         disabled={currentPage === totalPages}
-        // onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => handlePageChange(currentPage + 1)}
         className="px-3 py-3 min-w-[44px]"
         aria-label="Próxima página"
       >

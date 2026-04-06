@@ -1,7 +1,7 @@
 import { getMovieListRepository } from '@/repositories/movies';
 
-export async function getMovieListService() {
-  const response = await getMovieListRepository();
+export async function getMovieListService(page?: number, title?: string) {
+  const response = await getMovieListRepository(page, title);
 
   const movieList = response?.data?.result.map((movie) => ({
     id: movie.id,
