@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button/button';
 import { useTheme } from 'next-themes';
 import { useSyncExternalStore } from 'react';
 import { logoutAction } from '@/app/(auth)/actions';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 
 function useHasMounted() {
   return useSyncExternalStore(
@@ -23,7 +23,9 @@ export function Topbar() {
   if (!mounted) return null;
 
   async function onLogout() {
-    logoutAction();
+    await logoutAction();
+
+    redirect('/');
   }
 
   return (

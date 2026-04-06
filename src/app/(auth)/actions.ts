@@ -1,7 +1,6 @@
 'use server';
 
 import { auth } from '@/lib/auth';
-import { redirect } from 'next/navigation';
 import { LoginFormValues } from './login/_components/login-form/login-schema';
 import { headers } from 'next/headers';
 import { SignupFormValues } from './cadastro/_components/signup-form/signup-schema';
@@ -56,8 +55,6 @@ export async function logoutAction() {
   await auth.api.signOut({
     headers: await headers(),
   });
-
-  redirect('/');
 }
 
 export async function signupAction(formData: SignupFormValues): Promise<ActionResult> {
