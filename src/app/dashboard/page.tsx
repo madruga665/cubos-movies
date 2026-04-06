@@ -3,6 +3,9 @@ import { SearchForm } from '@/components/ui/search-input/search-form';
 import { MovieCard } from '@/components/ui/movie-card/movie-card';
 import { Pagination } from '@/components/ui/pagination/pagination';
 import { getMovieListService } from './services/movies.service';
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 
 export default async function DashboardPage(props: {
   searchParams: Promise<{ page?: string; search?: string }>;
@@ -10,8 +13,10 @@ export default async function DashboardPage(props: {
   const searchParams = await props.searchParams;
   const currentPage = Number(searchParams.page) || 1;
   const searchTerm = searchParams.search;
-
   const { movieList, paginationData } = await getMovieListService(currentPage, searchTerm);
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session) redirect('/');
 
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
