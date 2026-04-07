@@ -16,12 +16,13 @@ export async function fetchAdapter<T>({
   options,
 }: FetchAdapterProps): Promise<ApiResponse<T>> {
   const apiBaseUrl = process.env.CUBOS_MOVIES_API_BASE_URL;
+  const nextHeaders = new Headers(await headers());
 
   try {
     const response = await fetch(`${apiBaseUrl}${url}`, {
       ...options,
       headers: {
-        ...Object.fromEntries(await headers()),
+        ...nextHeaders,
         ...options.headers,
       },
     });
