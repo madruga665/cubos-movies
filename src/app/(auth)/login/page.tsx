@@ -3,7 +3,6 @@ import { LoginForm } from './_components/login-form/login-form';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Cubos Movies | Login',

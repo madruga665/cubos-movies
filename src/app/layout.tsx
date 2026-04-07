@@ -3,8 +3,6 @@ import { Providers } from '@/providers/theme';
 import { Topbar } from '@/components/ui/top-bar/top-bar';
 import { Footer } from '@/components/ui/footer/footer';
 import Image from 'next/image';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import { Toaster } from 'sonner';
 import './globals.css';
 
