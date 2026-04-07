@@ -20,7 +20,10 @@ export async function fetchAdapter<T>({
   try {
     const response = await fetch(`${apiBaseUrl}${url}`, {
       ...options,
-      headers: await headers(),
+      headers: {
+        ...Object.fromEntries(await headers()),
+        ...options.headers,
+      },
     });
     const status = response.status;
     const data: T = status !== 204 ? await response.json() : null;
