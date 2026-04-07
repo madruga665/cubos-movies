@@ -1,5 +1,4 @@
-import { auth } from '@/app/api/auth/[...all]/routes';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 type FetchAdapterProps = {
   url: string;
@@ -18,12 +17,19 @@ export async function fetchAdapter<T>({
 }: FetchAdapterProps): Promise<ApiResponse<T>> {
   const apiBaseUrl = process.env.CUBOS_MOVIES_API_BASE_URL;
   const nextHeaders = new Headers(await headers());
+  const cookieStore = await cookies();
+
+  const sessionToken =
+    cookieStore.get('__Secure-better-auth.session_token')?.value ||
+    cookieStore.get('better-auth.session_token')?.value;
 
   try {
     const response = await fetch(`${apiBaseUrl}${url}`, {
       ...options,
       credentials: 'include',
       headers: {
+        Authorization: `Bearer ${sessionToken}`,
+        'Content-Type': 'application/json',
         ...nextHeaders,
         ...options.headers,
       },
