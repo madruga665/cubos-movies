@@ -18,16 +18,12 @@ export async function fetchAdapter<T>({
 }: FetchAdapterProps): Promise<ApiResponse<T>> {
   const apiBaseUrl = process.env.CUBOS_MOVIES_API_BASE_URL;
   const nextHeaders = new Headers(await headers());
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
 
   try {
     const response = await fetch(`${apiBaseUrl}${url}`, {
       ...options,
       credentials: 'include',
       headers: {
-        Authorization: `Bearer ${session?.session.token}`,
         ...nextHeaders,
         ...options.headers,
       },
