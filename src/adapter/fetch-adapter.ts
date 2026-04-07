@@ -28,6 +28,7 @@ export async function fetchAdapter<T>({
         ...options.headers,
       },
     });
+    console.warn(nextHeaders);
     const status = response.status;
     const data: T = status !== 204 ? await response.json() : null;
 
