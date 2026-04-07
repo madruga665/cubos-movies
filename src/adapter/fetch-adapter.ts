@@ -21,6 +21,7 @@ export async function fetchAdapter<T>({
   try {
     const response = await fetch(`${apiBaseUrl}${url}`, {
       ...options,
+      credentials: 'include',
       headers: {
         ...nextHeaders,
         ...options.headers,
