@@ -4,8 +4,8 @@ import { MovieCard } from '../movie-card/movie-card';
 import { Button } from '../ui/button/button';
 import { Pagination } from '../ui/pagination/pagination';
 import { SearchInput } from '../ui/search-input/search-input';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { redirect } from 'next/navigation';
 
 type MovieList = {
   id: string;
@@ -15,25 +15,31 @@ type MovieList = {
   posterUrl: string | null;
 };
 
-type DasboardGridProps = {
+type DashboardGridProps = {
   movieList?: MovieList[];
   paginationData?: Metadata;
 };
 
-export function DashboardGrid({ movieList, paginationData }: DasboardGridProps) {
+export function DashboardGrid({ movieList, paginationData }: DashboardGridProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-
   const filteredMovies = movieList?.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   function handleCreateMovie() {
-    redirect('/dashboard/adicionar-filme');
+    router.push('/dashboard/adicionar-filme');
   }
+
   return (
     <main className="relative z-30 flex-1 flex flex-col items-center justify-start w-full">
       <div className="flex flex-col md:flex-row items-center justify-end gap-4 p-4 md:p-6 w-full max-w-341.5">
-        <SearchInput onChange={(event) => setSearchQuery(event.target.value)} />
+        <SearchInput
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onBlur={() => setSearchQuery('')}
+          placeholder="Pesquise por filmes..."
+        />
         <div className="flex gap-2 w-full md:w-auto">
           <Button variant="ghost" className="flex-1 md:flex-none">
             Filtros
@@ -65,6 +71,7 @@ export function DashboardGrid({ movieList, paginationData }: DasboardGridProps) 
           </div>
         )}
       </div>
+
       <Pagination currentPage={paginationData?.page} totalPages={paginationData?.totalPages} />
     </main>
   );
