@@ -1,4 +1,7 @@
-import { getMovieListService, getOnboardingStatusService } from './services/movies.service';
+import {
+  getMovieListService,
+  getOnboardingStatusService,
+} from './services/movies.service';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
@@ -18,6 +21,8 @@ export default async function DashboardPage(props: {
   const currentPage = Number(searchParams.page) || 1;
   const searchTerm = searchParams.search;
   const { movieList, paginationData } = await getMovieListService(currentPage, searchTerm);
+  const movieGenres = movieList ? movieList.flatMap(movie => movie.genres.split(', ')) : [];
+  const allGenres = Array.from(new Set([...movieGenres])).sort();
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session) redirect('/');
@@ -27,7 +32,7 @@ export default async function DashboardPage(props: {
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
       {!isPopulated && <OnboardingModal onConfirm={populateMoviesAction} />}
-      <DashboardGrid movieList={movieList} paginationData={paginationData} />
+      <DashboardGrid movieList={movieList} paginationData={paginationData} allGenres={allGenres} />
     </div>
   );
 }

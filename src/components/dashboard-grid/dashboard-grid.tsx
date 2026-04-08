@@ -6,6 +6,7 @@ import { Pagination } from '../ui/pagination/pagination';
 import { SearchInput } from '../ui/search-input/search-input';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { FilterSection } from './filter-section';
 
 type MovieList = {
   id: string;
@@ -18,17 +19,36 @@ type MovieList = {
 type DashboardGridProps = {
   movieList?: MovieList[];
   paginationData?: Metadata;
+  allGenres: string[];
 };
 
-export function DashboardGrid({ movieList, paginationData }: DashboardGridProps) {
+export function DashboardGrid({ movieList, paginationData, allGenres }: DashboardGridProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const filteredMovies = movieList?.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
+  const filteredMovies = movieList?.filter((movie) => {
+    const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesGenres =
+      selectedGenres.length === 0 ||
+      selectedGenres.some((genre) => movie.genres.includes(genre));
+
+    return matchesSearch && matchesGenres;
+  });
 
   function handleCreateMovie() {
     router.push('/dashboard/adicionar-filme');
+  }
+
+  function handleApplyFilters(genres: string[]) {
+    setSelectedGenres(genres);
+    setShowFilters(false);
+  }
+
+  function handleClearFilters() {
+    setSelectedGenres([]);
+    setShowFilters(false);
   }
 
   return (
@@ -41,7 +61,11 @@ export function DashboardGrid({ movieList, paginationData }: DashboardGridProps)
           placeholder="Pesquise por filmes..."
         />
         <div className="flex gap-2 w-full md:w-auto">
-          <Button variant="ghost" className="flex-1 md:flex-none">
+          <Button
+            variant={showFilters ? 'primary' : 'ghost'}
+            className="flex-1 md:flex-none"
+            onClick={() => setShowFilters(!showFilters)}
+          >
             Filtros
           </Button>
           <Button className="flex-2 md:flex-none" onClick={handleCreateMovie}>
@@ -49,6 +73,15 @@ export function DashboardGrid({ movieList, paginationData }: DashboardGridProps)
           </Button>
         </div>
       </div>
+
+      {showFilters && (
+        <FilterSection
+          genres={allGenres}
+          selectedGenres={selectedGenres}
+          onApplyFilters={handleApplyFilters}
+          onClearFilters={handleClearFilters}
+        />
+      )}
 
       {/* Movies Grid */}
       <div className="bg-card/40 backdrop-blur-xs rounded-sm p-4 md:p-6 w-full max-w-341.5">
