@@ -36,7 +36,7 @@ export function DeleteMovieButton({ movieId, className }: DeleteMovieButtonProps
         setIsDeleting(false);
         setIsModalOpen(false);
       }
-    } catch (error) {
+    } catch {
       toast.error('Ocorreu um erro inesperado');
       setIsDeleting(false);
       setIsModalOpen(false);
