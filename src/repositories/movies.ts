@@ -1,7 +1,7 @@
 import { Movie } from './movie-type';
 import { fetchAdapter } from '@/adapter/fetch-adapter';
 
-type Metadata = {
+export type Metadata = {
   total: number;
   page: number;
   limit: number;

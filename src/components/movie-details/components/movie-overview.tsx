@@ -6,10 +6,10 @@ type MovieOverview = {
 
 export function MovieOverview({ tagline, overview, genres }: MovieOverview) {
   return (
-    <div className="flex flex-col justify-around max-w-104 gap-4">
+    <div className="flex flex-col justify-around w-full max-w-104 gap-4">
       <p className="text-[16px] italic">{tagline}</p>
       <div className="card-glass">
-        <h2 className="text-[16px] font-bold uppercase ">sinopse</h2>
+        <h2 className="text-[16px] font-bold uppercase">sinopse</h2>
         <p className="text-[16px]">{overview}</p>
       </div>
       <div className="card-glass w-full md:max-w-max truncate">
