@@ -10,25 +10,25 @@ export function MovieInfo({ originalLanguage, releaseDate, runtime, status }: Mo
     <div className="flex flex-col w-full gap-4">
       <div className="flex items-center justify-center gap-4">
         <div className="card-glass flex-1">
-          <h2 className="text-[12px] text-[#B5B2BC] font-bold uppercase ">lançamento</h2>
-          <p className="text-[14px]">{releaseDate}</p>
+          <h2 className="heading2">lançamento</h2>
+          <p className="paragrah">{releaseDate}</p>
         </div>
 
         <div className="card-glass flex-1">
-          <h2 className="text-[12px] text-[#B5B2BC] font-bold uppercase ">duração</h2>
-          <p className="text-[14px]">{runtime}</p>
+          <h2 className="heading2">duração</h2>
+          <p className="paragrah">{runtime}</p>
         </div>
       </div>
 
       <div className="flex items-center justify-center gap-4">
         <div className="card-glass flex-1">
-          <h2 className="text-[12px] text-[#B5B2BC] font-bold uppercase ">situação</h2>
-          <p className="text-[14px]">{status}</p>
+          <h2 className="heading2">situação</h2>
+          <p className="paragrah">{status}</p>
         </div>
 
         <div className="card-glass flex-1">
-          <h2 className="text-[12px] text-[#B5B2BC] font-bold uppercase ">idioma</h2>
-          <p className="text-[14px]">{originalLanguage}</p>
+          <h2 className="heading2">idioma</h2>
+          <p className="paragrah">{originalLanguage}</p>
         </div>
       </div>
     </div>

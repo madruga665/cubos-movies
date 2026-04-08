@@ -63,4 +63,12 @@ body {
   .card-glass {
     @apply flex flex-col gap-2 p-4 bg-[#232225]/60 backdrop-blur-xs rounded-sm;
   }
+
+  .paragrah {
+    @apply text-[14px] text-[#EEEEF0] font-semibold
+  }
+
+  .heading2 {
+    @apply text-[12px] text-[#B5B2BC] font-bold uppercase
+  }
 }

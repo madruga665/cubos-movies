@@ -64,7 +64,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-3xl md:text-5xl font-bold">{movie.title}</h1>
           <p className="text-lg md:text-xl italic opacity-70">
-            {`Titulo original: ${movie.originalTitle}`}
+            {movie.originalTitle && `Titulo original: ${movie.originalTitle}`}
           </p>
         </div>
 
