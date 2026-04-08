@@ -108,7 +108,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
               <div>
                 <h2 className="text-[32px] font-bold">{movie.title}</h2>
                 <p className="text-[16px] opacity-70">
-                  {`Titulo original: ${movie.originalTitle}`}
+                  {movie.originalTitle && `Titulo original: ${movie.originalTitle}`}
                 </p>
               </div>
               <div className="flex gap-2 w-auto">
