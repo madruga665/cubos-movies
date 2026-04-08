@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button/button';
 import { SearchForm } from '@/components/ui/search-input/search-form';
-import { MovieCard } from '@/components/ui/movie-card/movie-card';
+import { MovieCard } from '@/components/movie-card/movie-card';
 import { Pagination } from '@/components/ui/pagination/pagination';
 import { getMovieListService } from './services/movies.service';
 import { auth } from '@/lib/auth';
@@ -43,6 +43,7 @@ export default async function DashboardPage(props: {
               {movieList.map((movie) => (
                 <MovieCard
                   key={movie.id}
+                  id={movie.id}
                   title={movie.title}
                   genres={movie.genres}
                   voteAvarege={movie.voteAverage}

@@ -18,7 +18,7 @@ export function Topbar() {
   const mounted = useHasMounted();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const isDashboard = pathname === '/dashboard';
+  const showLogoutButton = pathname.includes('/dashboard');
 
   if (!mounted) return null;
 
@@ -75,7 +75,7 @@ export function Topbar() {
             )}
           </div>
         </Button>
-        {isDashboard && <Button onClick={onLogout}>Logout</Button>}
+        {showLogoutButton && <Button onClick={onLogout}>Logout</Button>}
       </div>
     </header>
   );
