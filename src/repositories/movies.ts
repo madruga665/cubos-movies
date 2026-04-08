@@ -70,3 +70,37 @@ export async function getMovieListRepository(page?: number, title?: string) {
     };
   }
 }
+
+export async function getOnboardingStatusRepository() {
+  const requestOptions = { method: 'GET' };
+  try {
+    return await fetchAdapter<{ isPopulated: boolean }>({
+      url: `/api/v1/movies/onboarding-status`,
+      options: requestOptions,
+    });
+  } catch (error) {
+    console.error(`[getOnboardingStatusRepository] - Erro inesperado:`, error);
+    return {
+      data: null,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+    };
+  }
+}
+
+export async function populateMoviesRepository() {
+  const requestOptions = { method: 'POST' };
+  try {
+    return await fetchAdapter<null>({
+      url: `/api/v1/movies/populate`,
+      options: requestOptions,
+    });
+  } catch (error) {
+    console.error(`[populateMoviesRepository] - Erro inesperado:`, error);
+    return {
+      data: null,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+    };
+  }
+}

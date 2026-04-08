@@ -1,9 +1,11 @@
-import { getMovieListService } from './services/movies.service';
+import { getMovieListService, getOnboardingStatusService } from './services/movies.service';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
 import { DashboardGrid } from '@/components/dashboard-grid/dashboard-grid';
+import { OnboardingModal } from '@/components/ui/modal/onboarding-modal';
+import { populateMoviesAction } from './onboarding-action';
 
 export const metadata: Metadata = {
   title: 'Cubos Movies | Dashboard',
@@ -20,8 +22,11 @@ export default async function DashboardPage(props: {
 
   if (!session) redirect('/');
 
+  const isPopulated = await getOnboardingStatusService();
+
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
+      {!isPopulated && <OnboardingModal onConfirm={populateMoviesAction} />}
       <DashboardGrid movieList={movieList} paginationData={paginationData} />
     </div>
   );

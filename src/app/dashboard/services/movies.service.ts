@@ -2,6 +2,8 @@ import {
   deleteMovieRepository,
   getMovieByIdRepository,
   getMovieListRepository,
+  getOnboardingStatusRepository,
+  populateMoviesRepository,
 } from '@/repositories/movies';
 
 function formatCurrency(value: number | null) {
@@ -83,4 +85,13 @@ export async function getMovieListService(page?: number, title?: string) {
 
 export async function deleteMovieService(id: string) {
   return await deleteMovieRepository(id);
+}
+
+export async function getOnboardingStatusService() {
+  const response = await getOnboardingStatusRepository();
+  return response?.data?.isPopulated ?? true; // Default to true if something fails to avoid showing modal repeatedly
+}
+
+export async function populateMoviesService() {
+  return await populateMoviesRepository();
 }
