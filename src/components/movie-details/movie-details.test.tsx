@@ -3,6 +3,17 @@ import { render, screen } from '@testing-library/react';
 import { MovieDetails } from './movie-details';
 import { MovieViewModel } from '@/app/dashboard/services/movies.service';
 
+// Mock the delete action to avoid environment issues with next/cache in JSDOM
+jest.mock('@/app/dashboard/movies/[id]/delete-action', () => ({
+  deleteMovieAction: jest.fn(),
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 describe('MovieDetails component', () => {
   const mockMovie: MovieViewModel = {
     id: '1',

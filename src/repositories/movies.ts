@@ -13,6 +13,23 @@ type MovieResponse = {
   metadata: Metadata;
 };
 
+export async function deleteMovieRepository(id: string) {
+  const requestOptions = { method: 'DELETE' };
+  try {
+    return await fetchAdapter<null>({
+      url: `/api/v1/movies/${id}`,
+      options: requestOptions,
+    });
+  } catch (error) {
+    console.error(`[deleteMovieRepository] - Erro inesperado:`, error);
+    return {
+      data: null,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+    };
+  }
+}
+
 export async function getMovieByIdRepository(id: string) {
   const requestOptions = { method: 'GET' };
   try {

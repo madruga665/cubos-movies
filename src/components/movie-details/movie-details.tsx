@@ -6,6 +6,7 @@ import { MovieInfo } from './components/movie-info';
 import { RatingInfo } from './components/rating-info';
 import { Button } from '../ui/button/button';
 import { MovieOverview } from './components/movie-overview';
+import { DeleteMovieButton } from './components/delete-movie-button';
 
 interface MovieDetailsProps {
   movie: MovieViewModel | null;
@@ -63,9 +64,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         </div>
 
         <div className="flex gap-2 w-full md:w-auto">
-          <Button variant="ghost" className="flex-1 md:flex-none">
-            Deletar
-          </Button>
+          <DeleteMovieButton movieId={movie.id} className="flex-1 md:flex-none" />
           <Button className="flex-2 md:flex-none">Editar</Button>
         </div>
 
@@ -120,9 +119,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
                 </p>
               </div>
               <div className="flex gap-2 w-auto">
-                <Button variant="ghost" className="flex-none">
-                  Deletar
-                </Button>
+                <DeleteMovieButton movieId={movie.id} className="flex-none" />
                 <Button className="flex-none">Editar</Button>
               </div>
             </div>
