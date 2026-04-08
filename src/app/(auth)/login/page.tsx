@@ -6,7 +6,6 @@ import { auth } from '@/lib/auth';
 
 export const metadata: Metadata = {
   title: 'Cubos Movies | Login',
-  description: 'Desafio Cubos - Fullstack',
 };
 
 export default async function LoginPage() {
@@ -14,9 +13,7 @@ export default async function LoginPage() {
     headers: await headers(),
   });
 
-  if (session) {
-    redirect('/dashboard');
-  }
+  if (session) redirect('/dashboard');
 
   return <LoginForm />;
 }
