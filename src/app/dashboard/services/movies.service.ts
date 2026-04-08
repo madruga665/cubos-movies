@@ -1,4 +1,3 @@
-import { Movie } from '@/repositories/movie-type';
 import { getMovieByIdRepository, getMovieListRepository } from '@/repositories/movies';
 
 function formatCurrency(value: number | null) {
