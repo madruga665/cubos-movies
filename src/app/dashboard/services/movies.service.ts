@@ -1,4 +1,8 @@
-import { getMovieByIdRepository, getMovieListRepository } from '@/repositories/movies';
+import {
+  deleteMovieRepository,
+  getMovieByIdRepository,
+  getMovieListRepository,
+} from '@/repositories/movies';
 
 function formatCurrency(value: number | null) {
   if (!value) return '0';
@@ -75,4 +79,8 @@ export async function getMovieListService(page?: number, title?: string) {
     movieList,
     paginationData: response?.data?.metadata,
   };
+}
+
+export async function deleteMovieService(id: string) {
+  return await deleteMovieRepository(id);
 }
