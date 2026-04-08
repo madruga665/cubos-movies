@@ -50,8 +50,6 @@ export async function getMovieByIdService(id: string): Promise<MovieViewModel | 
 
   const movie = response.data;
 
-  console.log(movie);
-
   return {
     ...movie,
     profit: formatCurrency(response.data.profit),

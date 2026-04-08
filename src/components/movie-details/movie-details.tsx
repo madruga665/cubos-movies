@@ -8,10 +8,18 @@ import { Button } from '../ui/button/button';
 import { MovieOverview } from './components/movie-overview';
 
 interface MovieDetailsProps {
-  movie: MovieViewModel;
+  movie: MovieViewModel | null;
 }
 
 export function MovieDetails({ movie }: MovieDetailsProps) {
+  if (!movie) {
+    return (
+      <div className="flex w-full h-full items-center justify-center">
+        <h2 className="heading2 text-5xl">filme não encontrado</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center w-dvw max-h-max p-4 gap-4 font-montserrat relative">
       {/* Back Button */}
