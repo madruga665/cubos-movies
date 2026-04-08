@@ -49,7 +49,7 @@ describe('DeleteMovieButton', () => {
     expect(screen.getByText(/Tem certeza que deseja excluir este filme?/i)).toBeInTheDocument();
   });
 
-  it('calls deleteMovieAction and redirects after delay on success when confirmed', async () => {
+  it('calls deleteMovieAction, closes modal and redirects after delay on success when confirmed', async () => {
     (deleteMovieAction as jest.Mock).mockResolvedValue({ success: true });
     
     render(<DeleteMovieButton movieId={movieId} />);
@@ -64,6 +64,8 @@ describe('DeleteMovieButton', () => {
     await waitFor(() => {
       expect(deleteMovieAction).toHaveBeenCalledWith(movieId);
       expect(toast.success).toHaveBeenCalledWith('Filme excluído com sucesso!');
+      // Modal should be closed
+      expect(screen.queryByText('Excluir Filme')).not.toBeInTheDocument();
     });
 
     // Info toast and push should NOT have been called yet
