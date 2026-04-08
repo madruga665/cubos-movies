@@ -104,3 +104,23 @@ export async function populateMoviesRepository() {
     };
   }
 }
+
+export async function updateMovieRepository(id: string, movieData: Partial<Movie>) {
+  const requestOptions = {
+    method: 'PATCH',
+    body: JSON.stringify(movieData),
+  };
+  try {
+    return await fetchAdapter<Movie>({
+      url: `/api/v1/movies/${id}`,
+      options: requestOptions,
+    });
+  } catch (error) {
+    console.error(`[updateMovieRepository] - Erro inesperado:`, error);
+    return {
+      data: null,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+    };
+  }
+}

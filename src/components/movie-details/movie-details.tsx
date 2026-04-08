@@ -65,7 +65,9 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
 
         <div className="flex gap-2 w-full md:w-auto">
           <DeleteMovieButton movieId={movie.id} className="flex-1 md:flex-none" />
-          <Button className="flex-2 md:flex-none">Editar</Button>
+          <Link href={`/dashboard/movies/${movie.id}/editar`} className="flex-2 md:flex-none">
+            <Button className="w-full">Editar</Button>
+          </Link>
         </div>
 
         <div className="flex flex-col justify-center items-center">
@@ -120,7 +122,9 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
               </div>
               <div className="flex gap-2 w-auto">
                 <DeleteMovieButton movieId={movie.id} className="flex-none" />
-                <Button className="flex-none">Editar</Button>
+                <Link href={`/dashboard/movies/${movie.id}/editar`}>
+                  <Button className="flex-none">Editar</Button>
+                </Link>
               </div>
             </div>
           </div>

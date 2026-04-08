@@ -4,7 +4,9 @@ import {
   getMovieListRepository,
   getOnboardingStatusRepository,
   populateMoviesRepository,
+  updateMovieRepository,
 } from '@/repositories/movies';
+import { Movie } from '@/repositories/movie-type';
 
 function formatCurrency(value: number | null) {
   if (!value) return '0';
@@ -94,4 +96,8 @@ export async function getOnboardingStatusService() {
 
 export async function populateMoviesService() {
   return await populateMoviesRepository();
+}
+
+export async function updateMovieService(id: string, movieData: Partial<Movie>) {
+  return await updateMovieRepository(id, movieData);
 }
