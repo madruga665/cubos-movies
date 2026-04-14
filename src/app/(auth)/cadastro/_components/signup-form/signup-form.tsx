@@ -70,8 +70,8 @@ export function SignupForm() {
         />
 
         <div className="flex items-center justify-end w-full mt-2">
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+          <Button type="submit" isLoading={isSubmitting}>
+            Cadastrar
           </Button>
         </div>
       </form>

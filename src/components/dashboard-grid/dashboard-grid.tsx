@@ -4,8 +4,8 @@ import { MovieCard } from '../movie-card/movie-card';
 import { Button } from '../ui/button/button';
 import { Pagination } from '../ui/pagination/pagination';
 import { SearchInput } from '../ui/search-input/search-input';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { FilterSection } from './filter-section';
 
 type MovieList = {
@@ -20,21 +20,49 @@ type DashboardGridProps = {
   movieList?: MovieList[];
   paginationData?: Metadata;
   allGenres: string[];
+  searchTerm?: string;
 };
 
-export function DashboardGrid({ movieList, paginationData, allGenres }: DashboardGridProps) {
+export function DashboardGrid({
+  movieList,
+  paginationData,
+  allGenres,
+  searchTerm,
+}: DashboardGridProps) {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState(searchTerm ?? '');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
-  const filteredMovies = movieList?.filter((movie) => {
-    const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesGenres =
-      selectedGenres.length === 0 ||
-      selectedGenres.some((genre) => movie.genres.includes(genre));
+  useEffect(() => {
+    setSearchQuery(searchTerm ?? '');
+  }, [searchTerm]);
 
-    return matchesSearch && matchesGenres;
+  useEffect(() => {
+    if (searchQuery === (searchTerm ?? '')) return;
+
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (searchQuery) {
+        params.set('search', searchQuery);
+      } else {
+        params.delete('search');
+      }
+      params.set('page', '1');
+      router.push(`?${params.toString()}`);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery, router, searchParams, searchTerm]);
+
+  const filteredMovies = movieList?.filter((movie) => {
+    const matchesGenres =
+      selectedGenres.length === 0 || selectedGenres.some((genre) => movie.genres.includes(genre));
+
+    return matchesGenres;
   });
 
   function handleCreateMovie() {
@@ -57,7 +85,6 @@ export function DashboardGrid({ movieList, paginationData, allGenres }: Dashboar
         <SearchInput
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onBlur={() => setSearchQuery('')}
           placeholder="Pesquise por filmes..."
         />
         <div className="flex gap-2 w-full md:w-auto">

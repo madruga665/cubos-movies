@@ -97,8 +97,8 @@ export function CreateMovieForm() {
         />
 
         <div className="flex items-center justify-end w-full mt-4">
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Adicionando...' : 'Adicionar Filme'}
+          <Button type="submit" isLoading={isSubmitting}>
+            Adicionar Filme
           </Button>
         </div>
       </form>

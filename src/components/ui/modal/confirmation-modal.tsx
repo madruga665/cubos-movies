@@ -59,13 +59,13 @@ export function ConfirmationModal({
           </Button>
           <Button
             onClick={onConfirm}
-            disabled={isLoading}
+            isLoading={isLoading}
             className={cn(
               "w-full md:w-auto order-1 md:order-2",
               isDanger && "bg-red-600 hover:bg-red-700 text-white"
             )}
           >
-            {isLoading ? 'Carregando...' : confirmText}
+            {confirmText}
           </Button>
         </div>
       </div>

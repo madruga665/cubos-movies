@@ -140,8 +140,8 @@ export function EditMovieForm({ movie }: EditMovieFormProps) {
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}
+          <Button type="submit" isLoading={isSubmitting}>
+            Salvar Alterações
           </Button>
         </div>
       </form>

@@ -61,8 +61,8 @@ export function LoginForm() {
           >
             Esqueci minha senha
           </Link>
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Entrando...' : 'Entrar'}
+          <Button type="submit" isLoading={isSubmitting}>
+            Entrar
           </Button>
         </div>
       </form>

@@ -32,7 +32,12 @@ export default async function DashboardPage(props: {
   return (
     <div className="relative min-h-screen flex flex-col bg-background">
       {!isPopulated && <OnboardingModal onConfirm={populateMoviesAction} />}
-      <DashboardGrid movieList={movieList} paginationData={paginationData} allGenres={allGenres} />
+      <DashboardGrid
+        movieList={movieList}
+        paginationData={paginationData}
+        allGenres={allGenres}
+        searchTerm={searchTerm}
+      />
     </div>
   );
 }

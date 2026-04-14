@@ -49,9 +49,9 @@ export function DeleteMovieButton({ movieId, className }: DeleteMovieButtonProps
         variant="ghost"
         className={className}
         onClick={() => setIsModalOpen(true)}
-        disabled={isDeleting}
+        isLoading={isDeleting}
       >
-        {isDeleting ? 'Excluindo...' : 'Deletar'}
+        Deletar
       </Button>
 
       <ConfirmationModal
