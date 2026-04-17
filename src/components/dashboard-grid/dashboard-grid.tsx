@@ -3,9 +3,9 @@ import { Metadata } from '@/repositories/movies';
 import { MovieCard } from '../movie-card/movie-card';
 import { Button } from '../ui/button/button';
 import { Pagination } from '../ui/pagination/pagination';
-import { SearchInput } from '../ui/search-input/search-input';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { SearchForm } from '../ui/search-input/search-form';
+import { useRouter } from 'next/navigation';
+import { useState, Suspense } from 'react';
 import { FilterSection } from './filter-section';
 
 type MovieList = {
@@ -30,33 +30,9 @@ export function DashboardGrid({
   searchTerm,
 }: DashboardGridProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const [searchQuery, setSearchQuery] = useState(searchTerm ?? '');
   const [showFilters, setShowFilters] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-
-  useEffect(() => {
-    setSearchQuery(searchTerm ?? '');
-  }, [searchTerm]);
-
-  useEffect(() => {
-    if (searchQuery === (searchTerm ?? '')) return;
-
-    const timeout = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (searchQuery) {
-        params.set('search', searchQuery);
-      } else {
-        params.delete('search');
-      }
-      params.set('page', '1');
-      router.push(`?${params.toString()}`);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [searchQuery, router, searchParams, searchTerm]);
 
   const filteredMovies = movieList?.filter((movie) => {
     const matchesGenres =
@@ -82,11 +58,9 @@ export function DashboardGrid({
   return (
     <main className="relative z-30 flex-1 flex flex-col items-center justify-start w-full">
       <div className="flex flex-col md:flex-row items-center justify-end gap-4 p-4 md:p-6 w-full max-w-341.5">
-        <SearchInput
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Pesquise por filmes..."
-        />
+        <Suspense fallback={<div className="h-11 w-full md:w-122 bg-input-bg animate-pulse rounded-sm" />}>
+          <SearchForm defaultValue={searchTerm} />
+        </Suspense>
         <div className="flex gap-2 w-full md:w-auto">
           <Button
             variant={showFilters ? 'primary' : 'ghost'}
