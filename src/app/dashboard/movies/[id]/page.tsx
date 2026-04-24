@@ -1,5 +1,5 @@
-import { getMovieByIdService } from '@/app/dashboard/services/movies.service';
-import { MovieDetails } from '@/components/movie-details/movie-details';
+import { getMovieByIdService } from '@/features/movies/services/movies.service';
+import { MovieDetails } from '@/features/movies/components/movie-details/movie-details';
 import { Metadata } from 'next';
 
 interface Props {

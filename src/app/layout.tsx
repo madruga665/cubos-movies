@@ -1,7 +1,7 @@
 import { Inter, Roboto, Montserrat } from 'next/font/google';
 import { Providers } from '@/providers/theme';
-import { Topbar } from '@/components/ui/top-bar/top-bar';
-import { Footer } from '@/components/ui/footer/footer';
+import { Topbar } from '@/components/layout/top-bar/top-bar';
+import { Footer } from '@/components/layout/footer/footer';
 import Image from 'next/image';
 import { Toaster } from 'sonner';
 import './globals.css';

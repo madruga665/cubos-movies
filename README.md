@@ -18,6 +18,25 @@ O projeto foi desenvolvido utilizando as seguintes ferramentas e tecnologias:
 - **Notificações:** [Sonner](https://sonner.emilkowal.ski/)
 - **Temas:** [Next Themes](https://github.com/pacocoursey/next-themes)
 
+## 🏗️ Estrutura do Projeto
+
+O projeto utiliza uma **Feature-Based Architecture**, organizando o código por domínio de negócio para maior escalabilidade e manutenibilidade.
+
+```text
+src/
+├── adapter/          # Adaptadores globais (ex: fetch-adapter)
+├── app/              # Next.js App Router (Rotas, Layouts e Páginas)
+├── components/       # Componentes globais
+│   ├── layout/       # Componentes estruturais (Topbar, Footer)
+│   └── ui/           # Componentes atômicos e genéricos (Button, Input, Spinner)
+├── features/         # Módulos baseados em funcionalidades (Core do Negócio)
+│   ├── auth/         # Domínio de Autenticação (Login, Cadastro, Actions, Schemas)
+│   └── movies/       # Domínio de Filmes (Dashboard, Detalhes, Repositórios, Serviços)
+├── generated/        # Arquivos gerados automaticamente (Prisma Client)
+├── lib/              # Bibliotecas e configurações (Auth, Prisma, Utils)
+└── providers/        # Context Providers (Theme)
+```
+
 ## 📋 Pré-requisitos
 
 Antes de começar, você precisará ter instalado em sua máquina:

@@ -1,5 +1,5 @@
-import { getMovieByIdService } from '@/app/dashboard/services/movies.service';
-import { EditMovieForm } from '../_components/edit-movie-form/edit-movie-form';
+import { getMovieByIdService } from '@/features/movies/services/movies.service';
+import { EditMovieForm } from '@/features/movies/components/edit-movie-form/edit-movie-form';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

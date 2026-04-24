@@ -1,14 +1,14 @@
 import {
   getMovieListService,
   getOnboardingStatusService,
-} from './services/movies.service';
+} from '@/features/movies/services/movies.service';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
-import { DashboardGrid } from '@/components/dashboard-grid/dashboard-grid';
-import { OnboardingModal } from '@/components/ui/modal/onboarding-modal';
-import { populateMoviesAction } from './onboarding-action';
+import { DashboardGrid } from '@/features/movies/components/dashboard-grid/dashboard-grid';
+import { OnboardingModal } from '@/features/movies/components/onboarding-modal';
+import { populateMoviesAction } from '@/features/movies/actions';
 
 export const metadata: Metadata = {
   title: 'Cubos Movies | Dashboard',

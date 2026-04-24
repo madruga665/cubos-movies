@@ -1,4 +1,4 @@
-import { CreateMovieForm } from './_components/create-movie-form/create-movie-form';
+import { CreateMovieForm } from '@/features/movies/components/create-movie-form/create-movie-form';
 
 export default function CreateMoviePage() {
   return (
