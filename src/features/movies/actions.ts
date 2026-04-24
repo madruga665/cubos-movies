@@ -1,10 +1,10 @@
 'use server';
 
-import { 
-  createMovieService, 
-  deleteMovieService, 
-  populateMoviesService, 
-  updateMovieService 
+import {
+  createMovieService,
+  deleteMovieService,
+  populateMoviesService,
+  updateMovieService,
 } from './services/movies.service';
 import { CreateMovieFormValues } from './schemas';
 import { revalidatePath } from 'next/cache';
@@ -26,7 +26,7 @@ export async function createMovieAction(formData: CreateMovieFormValues): Promis
     if (response.status !== 201 && response.status !== 200) {
       return {
         success: false,
-        error: response.error || 'Erro ao criar filme',
+        error: response.error || 'Error creating movie',
       };
     }
 
@@ -35,12 +35,15 @@ export async function createMovieAction(formData: CreateMovieFormValues): Promis
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Um erro aconteceu tente novamente mais tarde',
+      error: error instanceof Error ? error.message : 'An error occurred, please try again later',
     };
   }
 }
 
-export async function updateMovieAction(id: string, formData: CreateMovieFormValues): Promise<ActionResult> {
+export async function updateMovieAction(
+  id: string,
+  formData: CreateMovieFormValues,
+): Promise<ActionResult> {
   try {
     const movieData = {
       ...formData,
@@ -52,7 +55,7 @@ export async function updateMovieAction(id: string, formData: CreateMovieFormVal
     if (response.status !== 200 && response.status !== 204) {
       return {
         success: false,
-        error: response.error || 'Erro ao atualizar filme',
+        error: response.error || 'Error updating movie',
       };
     }
 
@@ -62,7 +65,7 @@ export async function updateMovieAction(id: string, formData: CreateMovieFormVal
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Um erro aconteceu tente novamente mais tarde',
+      error: error instanceof Error ? error.message : 'An error occurred, please try again later',
     };
   }
 }
@@ -80,7 +83,7 @@ export async function deleteMovieAction(id: string): Promise<ActionResult> {
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Erro ao deletar filme',
+      error: error instanceof Error ? error.message : 'Error deleting movie',
     };
   }
 }
@@ -91,7 +94,7 @@ export async function populateMoviesAction(): Promise<ActionResult> {
   if (response.status !== 201 && response.status !== 200) {
     return {
       success: false,
-      error: response.error || 'Erro ao popular filmes',
+      error: response.error || 'Error populating movies',
     };
   }
 

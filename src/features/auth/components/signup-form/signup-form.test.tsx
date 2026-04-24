@@ -27,27 +27,30 @@ describe('SignupForm', () => {
     expect(screen.getByLabelText(/confirmação de senha/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cadastrar/i })).toBeInTheDocument();
   });
-
   it('should show validation errors', async () => {
     render(<SignupForm />);
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     expect(await screen.findByText(/nome é obrigatório/i)).toBeInTheDocument();
     expect(await screen.findByText(/formato de e-mail inválido/i)).toBeInTheDocument();
-    expect(await screen.findByText(/a senha deve ter pelo menos 6 caracteres/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/a senha deve ter pelo menos 6 caracteres/i),
+    ).toBeInTheDocument();
   });
 
   it('should show error if passwords do not match', async () => {
     render(<SignupForm />);
-    fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'Test' } });
-    fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByLabelText(/^senha/i), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), { target: { value: 'password321' } });
+
+    fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'john@example.com' } });
+    fireEvent.change(screen.getByLabelText(/^senha$/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), {
+      target: { value: 'password321' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
-    expect(await screen.findByText(/as senhas devem ser iguais/i)).toBeInTheDocument();
+    expect(await screen.findByText(/passwords must match/i)).toBeInTheDocument();
   });
-
   it('should call signupAction and redirect on success', async () => {
     (signupAction as jest.Mock).mockResolvedValue({ success: true, error: null });
     render(<SignupForm />);
@@ -55,7 +58,9 @@ describe('SignupForm', () => {
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'john@example.com' } });
     fireEvent.change(screen.getByLabelText(/^senha/i), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), {
+      target: { value: 'password123' },
+    });
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     await waitFor(() => {
@@ -70,17 +75,23 @@ describe('SignupForm', () => {
   });
 
   it('should show error toast if signupAction returns an error', async () => {
-    (signupAction as jest.Mock).mockResolvedValue({ success: false, error: 'Email já cadastrado' });
+    (signupAction as jest.Mock).mockResolvedValue({
+      success: false,
+      error: 'Email already in use',
+    });
     render(<SignupForm />);
 
     fireEvent.change(screen.getByLabelText(/nome/i), { target: { value: 'John Doe' } });
     fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'john@example.com' } });
-    fireEvent.change(screen.getByLabelText(/^senha/i), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/^senha$/i), { target: { value: 'password123' } });
+    fireEvent.change(screen.getByLabelText(/confirmação de senha/i), {
+      target: { value: 'password123' },
+    });
+
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith('Email já cadastrado');
+      expect(toast.error).toHaveBeenCalledWith('Email already in use');
     });
   });
 });

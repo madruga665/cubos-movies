@@ -25,7 +25,7 @@ export function DeleteMovieButton({ movieId, className }: DeleteMovieButtonProps
       if (result.success) {
         setIsModalOpen(false);
         toast.success('Filme excluído com sucesso!');
-        
+
         // Wait for the success toast to be visible before showing the next info and redirecting
         setTimeout(() => {
           toast.info('Redirecionando para a dashboard...');

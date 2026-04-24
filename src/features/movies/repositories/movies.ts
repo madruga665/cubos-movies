@@ -24,11 +24,11 @@ export async function createMovieRepository(movieData: Partial<Movie>) {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[createMovieRepository] - Erro inesperado:`, error);
+    console.error(`[createMovieRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -41,11 +41,11 @@ export async function deleteMovieRepository(id: string) {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[deleteMovieRepository] - Erro inesperado:`, error);
+    console.error(`[deleteMovieRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -58,11 +58,11 @@ export async function getMovieByIdRepository(id: string) {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[getMovieByIdRepository] - Erro inesperado:`, error);
+    console.error(`[getMovieByIdRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -82,11 +82,11 @@ export async function getMovieListRepository(page?: number, title?: string) {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[getMovieListRepository] - Erro inesperado:`, error);
+    console.error(`[getMovieListRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -99,11 +99,11 @@ export async function getOnboardingStatusRepository() {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[getOnboardingStatusRepository] - Erro inesperado:`, error);
+    console.error(`[getOnboardingStatusRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -116,11 +116,11 @@ export async function populateMoviesRepository() {
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[populateMoviesRepository] - Erro inesperado:`, error);
+    console.error(`[populateMoviesRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }
@@ -136,11 +136,11 @@ export async function updateMovieRepository(id: string, movieData: Partial<Movie
       options: requestOptions,
     });
   } catch (error) {
-    console.error(`[updateMovieRepository] - Erro inesperado:`, error);
+    console.error(`[updateMovieRepository] - Unexpected error:`, error);
     return {
       data: null,
       status: 500,
-      error: error instanceof Error ? error.message : 'Erro interno do servidor',
+      error: error instanceof Error ? error.message : 'Internal server error',
     };
   }
 }

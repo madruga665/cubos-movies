@@ -42,7 +42,7 @@ export function DashboardGrid({
   });
 
   function handleCreateMovie() {
-    router.push('/dashboard/adicionar-filme');
+    router.push('/dashboard/add-movie');
   }
 
   function handleApplyFilters(genres: string[]) {
@@ -58,7 +58,9 @@ export function DashboardGrid({
   return (
     <main className="relative z-30 flex-1 flex flex-col items-center justify-start w-full">
       <div className="flex flex-col md:flex-row items-center justify-end gap-4 p-4 md:p-6 w-full max-w-341.5">
-        <Suspense fallback={<div className="h-11 w-full md:w-122 bg-input-bg animate-pulse rounded-sm" />}>
+        <Suspense
+          fallback={<div className="h-11 w-full md:w-122 bg-input-bg animate-pulse rounded-sm" />}
+        >
           <SearchForm defaultValue={searchTerm} />
         </Suspense>
         <div className="flex gap-2 w-full md:w-auto">

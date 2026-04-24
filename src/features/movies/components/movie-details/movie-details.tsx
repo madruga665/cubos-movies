@@ -56,7 +56,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
         <div>
           <Image
             src={movie.posterUrl || '/default-poster.webp'}
-            alt={`Pôster de ${movie.title}`}
+            alt={`Poster of ${movie.title}`}
             width={382}
             height={582}
             className="w-95.5 h-145.5"
@@ -90,7 +90,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
           originalLanguage={movie.originalLanguage}
           releaseDate={movie.releaseDate}
           runtime={movie.runtime}
-          status={movie.runtime}
+          status={movie.status}
         />
 
         <MonetaryInfo budget={movie.budget} profit={movie.profit} revenue={movie.revenue} />
@@ -122,7 +122,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
               </div>
               <div className="flex gap-2 w-auto">
                 <DeleteMovieButton movieId={movie.id} className="flex-none" />
-                <Link href={`/dashboard/movies/${movie.id}/editar`}>
+                <Link href={`/dashboard/movies/${movie.id}/edit`}>
                   <Button className="flex-none">Editar</Button>
                 </Link>
               </div>
@@ -156,7 +156,7 @@ export function MovieDetails({ movie }: MovieDetailsProps) {
                 originalLanguage={movie.originalLanguage}
                 releaseDate={movie.releaseDate}
                 runtime={movie.runtime}
-                status={movie.runtime}
+                status={movie.status}
               />
 
               <MonetaryInfo budget={movie.budget} profit={movie.profit} revenue={movie.revenue} />

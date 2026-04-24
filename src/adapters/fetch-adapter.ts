@@ -46,13 +46,13 @@ export async function fetchAdapter<T>({
       return {
         data: null,
         status,
-        error: `[fetchAdapter] - Erro em ${url}, status: ${status}`,
+        error: `[fetchAdapter] - Error in ${url}, status: ${status}`,
       };
     }
 
     return { data, status, error: null };
   } catch (error) {
-    console.error(`[fetchAdapter] - Erro em ${url}:`, error);
+    console.error(`[fetchAdapter] - Error in ${url}:`, error);
     return {
       data: null,
       status: 500,

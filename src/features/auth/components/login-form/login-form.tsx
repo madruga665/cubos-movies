@@ -69,7 +69,7 @@ export function LoginForm() {
       <div className="flex gap-2 items-center justify-center">
         <p>Ainda não é cadastrado?</p>
         <Link
-          href="/cadastro"
+          href="/signup"
           className="font-roboto font-normal text-primary text-base underline decoration-solid decoration-primary underline-offset-4"
         >
           Crie sua conta aqui

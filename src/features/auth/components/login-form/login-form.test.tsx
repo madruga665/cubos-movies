@@ -31,7 +31,9 @@ describe('LoginForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /entrar/i }));
 
     expect(await screen.findByText(/formato de e-mail inválido/i)).toBeInTheDocument();
-    expect(await screen.findByText(/a senha deve ter pelo menos 6 caracteres/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/a senha deve ter pelo menos 6 caracteres/i),
+    ).toBeInTheDocument();
   });
 
   it('should call loginAction and redirect on success', async () => {
@@ -52,7 +54,10 @@ describe('LoginForm', () => {
   });
 
   it('should show error toast if loginAction returns an error', async () => {
-    (loginAction as jest.Mock).mockResolvedValue({ success: false, error: 'E-mail ou senha incorretos' });
+    (loginAction as jest.Mock).mockResolvedValue({
+      success: false,
+      error: 'E-mail ou senha incorretos',
+    });
     render(<LoginForm />);
 
     fireEvent.change(screen.getByLabelText(/e-mail/i), { target: { value: 'test@example.com' } });
