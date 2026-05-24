@@ -42,7 +42,6 @@ next-env.d.ts
 
 # IA
 .agents
-skills-lock.json
 
 # prisma
 src/generated/

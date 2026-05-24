@@ -29,10 +29,12 @@ export async function loginAction(formData: LoginFormValues): Promise<ActionResu
         email,
         password,
       },
+      headers: await headers(),
     });
 
     return { success: true, error: null };
   } catch (error) {
+    console.error('Erro no loginAction:', error);
     if (
       error instanceof APIError &&
       error.body?.code === betterAuthErrorCodes.invalidEmailOrPassword
@@ -66,10 +68,12 @@ export async function signupAction(formData: SignupFormValues): Promise<ActionRe
         email,
         password,
       },
+      headers: await headers(),
     });
 
     return { success: true, error: null };
   } catch (error) {
+    console.error('Erro no signupAction:', error);
     if (error instanceof APIError && error.body?.code === betterAuthErrorCodes.userAlreadyExists) {
       return {
         success: false,
